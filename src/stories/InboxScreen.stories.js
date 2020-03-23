@@ -2,7 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { Provider } from 'react-redux';
 
-import { PureInboxScreen } from './InboxScreen';
+import { PureInboxScreen } from '../components/InboxScreen';
 import { defaultTasksData } from './TaskList.stories';
 
 export default {

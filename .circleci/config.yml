@@ -2,7 +2,7 @@ version: 2 # use CircleCI 2.0
 jobs:
   build:
     docker:
-      - image: circleci/node:10
+      - image: registry.gitlab.com/phanantung279/taskbox
     steps:
       - checkout # special step to check out source code to working directory
 
@@ -24,7 +24,12 @@ jobs:
           name: Run tests
           # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
           command: npm test # replace with `yarn test` if using yarn
-
+      - run:
+          name: Build storybook
+          command: npm run build-storybook
+      - run: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gsutil rsync -R storybook-static gs://storybook.flownote.ai
       - store_artifacts: 
           path: test-results
 
